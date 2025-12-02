@@ -38,6 +38,7 @@ private fun <TOutput> doday(day: Int, filename: String, func: (String) -> TOutpu
         return
     }
 
-    val result = func(file.readText())
+    val input = file.readText().trim()
+    val result = func(input)
     println("    ${filename.padEnd(6)}   -> $result")
 }
