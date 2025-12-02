@@ -21,4 +21,20 @@ class Day2 {
 
         assertEquals(expected, result)
     }
+
+
+    @ParameterizedTest
+    @CsvSource(
+        "11, true",
+        "22, true",
+        "1010, true",
+        "999, true",
+        "222222, true",
+        "4464460, false",
+    )
+    fun testIsInvalid2(input: Long, expected: Boolean) {
+        val result = isInvalid2(input)
+
+        assertEquals(expected, result)
+    }
 }
