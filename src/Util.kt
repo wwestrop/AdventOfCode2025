@@ -1,5 +1,4 @@
 import java.io.File
-import java.util.Optional
 
 
 fun <TOutput> parseLines(input: String, parser: (String) -> TOutput): List<TOutput> {
@@ -8,29 +7,24 @@ fun <TOutput> parseLines(input: String, parser: (String) -> TOutput): List<TOutp
         .map(parser)
 }
 
-fun <TOutput> day(num: Int, func1: (String) -> TOutput, func2: (String) -> TOutput) {
-    // TODO why do I need this overload, why won't it cast automatically to Optional?
-    // yes it would weaken the type guarantees, but it doesn't guarantee anything it couldn't prove
-    day(num, func1, Optional.of(func2))
-}
 
-fun <TOutput> day(num: Int, func1: (String) -> TOutput, func2: Optional<(String) -> TOutput> = Optional.empty()) {
+fun <TOutput> day(num: Int, func1: (String) -> TOutput, func2: ((String) -> TOutput)? = null) {
     println("Day $num:")
 
     println("  Part 1:")
-    doday(num, "sample", func1)
-    doday(num, "full", func1)
-
-    func2.ifPresent {
+    doDay(num, "sample", func1)
+    doDay(num, "full", func1)
+    
+    if (func2 != null) {
         println("  Part 2:")
-        doday(num, "sample", it)
-        doday(num, "full", it)
+        doDay(num, "sample", func2)
+        doDay(num, "full", func2)
     }
 
     println("------------------------------------------\n")
 }
 
-private fun <TOutput> doday(day: Int, filename: String, func: (String) -> TOutput) {
+private fun <TOutput> doDay(day: Int, filename: String, func: (String) -> TOutput) {
     val dir = "out/production/AdventOfCode2025/inputs/day${day.toString().padStart(2, '0')}"
     val file = File("$dir/$filename")
 
