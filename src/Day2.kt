@@ -1,12 +1,9 @@
-data class Range(val from: Long, val to: Long)
-
-
-private fun parseLine(input: String): List<Range> {
+private fun parseLine(input: String): List<LongRange> {
     return input
         .split(",")
         .map {
             val parts = it.split("-").map { it.toLong() }
-            Range(parts[0], parts[1])
+            LongRange(parts[0], parts[1])
         }
 }
 
@@ -19,17 +16,10 @@ fun day2(rawInput: String): Long {         // TODO it's probably going to overfl
         .sum()
 }
 
-internal fun sumInvalidIds(range: Range): Long {
-
-    var accumulator = 0L
-
-    for (num in range.from..range.to) {
-        if (isInvalid(num)) {
-            accumulator += num
-        }
-    }
-
-    return accumulator
+internal fun sumInvalidIds(range: LongRange): Long {
+    return range
+        .filter { isInvalid(it) }
+        .sum()
 }
 
 
