@@ -8,6 +8,33 @@ fun <TOutput> parseLines(input: String, parser: (String) -> TOutput): List<TOutp
 }
 
 
+fun <T> printGrid(
+    grid: List<List<T>>,
+    transformer: (T, Point) -> Char = { v, p -> v.toString()[0] },
+    highlighter: (T, Point) -> Boolean = { v, p -> false }) {
+
+    val ANSI_RESET = "\u001B[0m"
+    val ANSI_RED = "\u001B[31m"
+
+    println("---------------------------------------------")
+
+    for (y in 0 ..<grid.size) {
+        for (x in 0 ..<grid[y].size) {
+            val transformed = transformer(grid[y][x], Point(x, y))
+            if (highlighter(grid[y][x], Point(x, y))) {
+                print("$ANSI_RED$transformed$ANSI_RESET ")
+            }
+            else {
+                print("$transformed ")
+            }
+        }
+        println()
+    }
+
+    println("---------------------------------------------")
+}
+
+
 fun <TOutput> day(num: Int, func1: (String) -> TOutput, func2: ((String) -> TOutput)? = null) {
     println("Day $num:")
 

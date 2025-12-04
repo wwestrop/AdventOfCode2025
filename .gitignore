@@ -29,8 +29,5 @@ bin/
 ### VS Code ###
 .vscode/
 
-### Mac OS ###
-.DS_Store
-
 ### Puzzle inputs ###
 /src/inputs/**/*
