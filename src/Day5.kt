@@ -34,6 +34,15 @@ fun day5(rawInput: String): Int {
         .count()
 }
 
+fun day5part2(rawInput: String): Int {
+    val (freshRanges, _) = parseInput(rawInput)
+
+    return freshRanges
+        .flatMap { it }     // this takes a long time, maybe it's allocating too many numbers
+        .toSet()
+        .count()
+}
+
 fun isFresh(ingredient: Long, freshRanges: List<LongRange>): Boolean {
     return freshRanges.any { ingredient in it }
 }
