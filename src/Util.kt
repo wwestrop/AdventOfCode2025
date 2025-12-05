@@ -4,6 +4,7 @@ import java.io.File
 fun <TOutput> parseLines(input: String, parser: (String) -> TOutput): List<TOutput> {
     return input.lines()
         .filter { !it.trim().isEmpty() }
+        .map { it.trim() }
         .map(parser)
 }
 
