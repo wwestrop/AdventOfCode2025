@@ -4,7 +4,7 @@ import java.io.File
 fun <TOutput> parseLines(input: String, parser: (String) -> TOutput): List<TOutput> {
     return input.lines()
         .filter { !it.trim().isEmpty() }
-        .map { it.trim() }
+        //.map { it.trim() }
         .map(parser)
 }
 
@@ -62,7 +62,7 @@ private fun <TOutput> doDay(day: Int, filename: String, func: (String) -> TOutpu
         return
     }
 
-    val input = file.readText().trim()
+    val input = file.readText() //.trim()
     val result = func(input)
     println("    ${filename.padEnd(6)}   -> $result")
 }
