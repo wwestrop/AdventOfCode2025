@@ -147,6 +147,17 @@ fun <T> List<List<T>>.enumeratePoints(): Sequence<Point> {
 }
 
 
+fun <T> List<List<T>>.getColumn(colNum: Int): Sequence<T> {
+    val numRows = this.count()
+
+    return sequence {
+        for (i in 0..<numRows) {
+            yield(this@getColumn[i][colNum])
+        }
+    }
+}
+
+
 operator fun <T> List<List<T>>.get(point: Point): T {
     return this[point.y][point.x]
 }
