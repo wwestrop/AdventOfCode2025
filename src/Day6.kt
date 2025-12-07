@@ -9,8 +9,12 @@ private fun parseLine(input: String): List<String> {
 }
 
 private fun parseLine2(input: String, columnMapping: List<Int>): List<String> {
-    var i = 0;
 
+    // hack because of the non-numeric operators in the final row
+    if (input.contains("*") || input.contains("+"))
+        return columnMapping.map { "X" }
+
+    var i = 0;
     val x = sequence {
         for (c in columnMapping) {
             yield(input.substring(i, i + c))
