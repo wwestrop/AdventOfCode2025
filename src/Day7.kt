@@ -46,7 +46,7 @@ fun day7(rawInput: String): Long {
             }
             else {
                 val beamContinuation = beam + downVector
-                if (!grid.isOutOfBounds(beamContinuation)) {
+                if (!grid.isOutOfBounds(beamContinuation) && !allBeams.contains(beamContinuation)) {
                     newBeams.add(beamContinuation)
                 }
             }
