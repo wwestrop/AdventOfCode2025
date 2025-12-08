@@ -17,8 +17,6 @@ private fun parseLine(input: String): List<CellType> {
 
 fun day7(rawInput: String): Long {
     val grid = parseLines(rawInput, ::parseLine)
-        .map { it.toMutableList() }
-        .toMutableList()
 
     var accumulator = 0L
     val startPoint = grid.enumeratePoints().first { grid[it] == CellType.Start }
@@ -57,4 +55,38 @@ fun day7(rawInput: String): Long {
     }
 
     return accumulator
+}
+
+
+private var acc2 = 0L
+
+fun day7Part2(rawInput: String): Long {
+    val grid = parseLines(rawInput, ::parseLine)
+
+    val startPoint = grid.enumeratePoints().first { grid[it] == CellType.Start }
+
+    acc2 = 0
+    countUniquePaths(startPoint, grid)
+    return acc2
+}
+
+
+fun countUniquePaths(from: Point, grid: List<List<CellType>>): Unit {
+    val downVector = Point(0, 1)
+
+    if (grid.isOutOfBounds(from)) {
+        acc2++
+        return
+    }
+    else if (grid[from] == CellType.Splitter) {
+        val leftBeam = from + Point(-1, 0)
+        countUniquePaths(leftBeam, grid)
+
+        val rightBeam = from + Point(1, 0)
+        countUniquePaths(rightBeam, grid)
+    }
+    else {
+        val downBeam = from + downVector
+        countUniquePaths(downBeam, grid)
+    }
 }
