@@ -6,4 +6,5 @@ fun main() {
     day(5, ::day5, ::day5part2)
     day(6, ::day6, ::day6part2)
     day(7, ::day7, ::day7Part2)
+    day(8, ::day8)
 }

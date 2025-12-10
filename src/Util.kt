@@ -9,6 +9,14 @@ fun <TOutput> parseLines(input: String, parser: (String) -> TOutput): List<TOutp
 }
 
 
+fun <TOutput> parseLinesIndexed(input: String, parser: (Int, String) -> TOutput): List<TOutput> {
+    return input.lines()
+        .filter { !it.trim().isEmpty() }
+        //.map { it.trim() }
+        .mapIndexed { i, s -> parser(i, s) }
+}
+
+
 fun <T> printGrid(
     grid: List<List<T>>,
     transformer: (T, Point) -> Char = { v, p -> v.toString()[0] },
