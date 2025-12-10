@@ -58,35 +58,41 @@ fun day7(rawInput: String): Long {
 }
 
 
-private var acc2 = 0L
-
 fun day7Part2(rawInput: String): Long {
     val grid = parseLines(rawInput, ::parseLine)
 
     val startPoint = grid.enumeratePoints().first { grid[it] == CellType.Start }
 
-    acc2 = 0
-    countUniquePaths(startPoint, grid)
-    return acc2
+    return countUniquePaths(startPoint, grid)
 }
 
-
-fun countUniquePaths(from: Point, grid: List<List<CellType>>): Unit {
+fun countUniquePaths(from: Point, grid: List<List<CellType>>): Long {
     val downVector = Point(0, 1)
 
-    if (grid.isOutOfBounds(from)) {
-        acc2++
-        return
-    }
-    else if (grid[from] == CellType.Splitter) {
-        val leftBeam = from + Point(-1, 0)
-        countUniquePaths(leftBeam, grid)
+    fun countUniquePaths(from: Point, grid: List<List<CellType>>, memo: MutableList<MutableList<Long>>): Long {
+        if (grid.isOutOfBounds(from)) {
+            return 1
+        }
 
-        val rightBeam = from + Point(1, 0)
-        countUniquePaths(rightBeam, grid)
+        if (memo[from] != 0L) {
+            return memo[from]
+        }
+
+        if (grid[from] == CellType.Splitter) {
+            val leftBeam = from + Point(-1, 0)
+            val rightBeam = from + Point(1, 0)
+
+            memo[from] = countUniquePaths(leftBeam, grid, memo) + countUniquePaths(rightBeam, grid, memo)
+            return memo[from]
+        }
+        else {
+            val downBeam = from + downVector
+
+            memo[from] = countUniquePaths(downBeam, grid, memo)
+            return memo[from]
+        }
     }
-    else {
-        val downBeam = from + downVector
-        countUniquePaths(downBeam, grid)
-    }
+
+    val memo = grid.map { it.map { _ -> 0L }.toMutableList() }.toMutableList()
+    return countUniquePaths(from, grid, memo)
 }
