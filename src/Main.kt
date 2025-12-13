@@ -10,4 +10,5 @@ fun main() {
     day(9, ::day9)
 
     day(11, ::day11)
+    day(11, ::day11, ::day11part2)
 }
